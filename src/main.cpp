@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    const QIcon appIcon(QStringLiteral(":/icons/app_icon.svg"));
+    const QIcon appIcon(":/icons/app_icon.svg");
     app.setWindowIcon(appIcon);
 
     MainWindow window;
