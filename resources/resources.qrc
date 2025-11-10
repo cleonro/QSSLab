@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file alias="styles/fancy.qss">styles/fancy.qss</file>
         <file alias="icons/app_icon.svg">icons/app_icon.svg</file>
+        <file alias="icons/checkmark_bold.svg">icons/checkmark_bold.svg</file>
     </qresource>
 </RCC>

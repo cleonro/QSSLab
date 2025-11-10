@@ -71,7 +71,6 @@ QPushButton {
     padding: 10px 18px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    transition: all 120ms ease-in-out;
 }
 
 QPushButton:hover {
@@ -84,7 +83,6 @@ QPushButton:hover {
         stop:0 #38bdf8,
         stop:1 #2563eb
     );
-    transform: translateY(-1px);
 }
 
 QPushButton:pressed {
@@ -129,4 +127,176 @@ QToolTip {
     border: 1px solid #38bdf8;
     border-radius: 6px;
     padding: 6px 10px;
+}
+
+QWidget#centralwidget {
+    background-color: rgba(13, 20, 36, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 18px;
+    padding: 12px;
+}
+
+QLabel {
+    color: #d8e3fb;
+    letter-spacing: 0.3px;
+}
+
+QLabel#heroTitleLabel {
+    font-size: 26px;
+    font-weight: 600;
+    color: #f5f7ff;
+}
+
+QLabel#heroSubtitleLabel {
+    color: #9cb7dd;
+}
+
+QGroupBox {
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 14px;
+    margin-top: 16px;
+    background: rgba(15, 23, 42, 0.7);
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 12px;
+    color: #93c5fd;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+QRadioButton, QCheckBox {
+    padding: 4px 0;
+    color: #e2e8f0;
+}
+
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: rgba(15, 23, 42, 0.3);
+}
+
+QRadioButton::indicator:checked {
+    border: 1px solid #38bdf8;
+    background: qradialgradient(
+        cx:0.5 cy:0.5 radius:0.8,
+        stop:0 #38bdf8,
+        stop:1 rgba(56, 189, 248, 0.15)
+    );
+}
+
+QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    background: rgba(15, 23, 42, 0.3);
+}
+
+QCheckBox::indicator:checked {
+    border: 1px solid #10b981;
+    background: conicalgradient(
+        cx:0.5 cy:0.5 angle:180,
+        stop:0 #10b981,
+        stop:0.35 #10b981,
+        stop:0.35 rgba(16, 185, 129, 0.15),
+        stop:1 rgba(16, 185, 129, 0.15)
+    );
+    image: url(:/icons/checkmark_bold.svg);
+}
+
+QComboBox {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    border-radius: 10px;
+    padding: 6px 36px 6px 12px;
+    color: #f1f5ff;
+}
+
+QComboBox::drop-down {
+    width: 28px;
+    border-left: 1px solid rgba(148, 163, 184, 0.25);
+    background: rgba(56, 189, 248, 0.15);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+QComboBox QAbstractItemView {
+    background: #0f172a;
+    border: 1px solid #2563eb;
+    selection-background-color: rgba(59, 130, 246, 0.35);
+    color: #e2e8f0;
+}
+
+QTreeWidget, QListWidget {
+    background: rgba(10, 16, 28, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 12px;
+    padding: 6px;
+    color: #dce7ff;
+}
+
+QTreeWidget::item, QListWidget::item {
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+QTreeWidget::item:selected, QListWidget::item:selected {
+    background: rgba(56, 189, 248, 0.2);
+    color: #f8fbff;
+}
+
+QTreeWidget::item:hover, QListWidget::item:hover {
+    background: rgba(59, 130, 246, 0.15);
+}
+
+QScrollArea {
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 14px;
+    background: rgba(9, 14, 24, 0.65);
+}
+
+QScrollArea QWidget {
+    background: transparent;
+}
+
+QSplitter::handle {
+    background: rgba(255, 255, 255, 0.05);
+    width: 12px;
+    border-radius: 6px;
+}
+
+QSplitter::handle:hover {
+    background: rgba(59, 130, 246, 0.3);
+}
+
+QScrollBar:horizontal {
+    background: transparent;
+    height: 12px;
+    margin: 8px;
+}
+
+QScrollBar::handle:horizontal {
+    background: rgba(148, 163, 184, 0.5);
+    border-radius: 6px;
+    min-width: 32px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: rgba(59, 130, 246, 0.7);
+}
+
+QScrollBar::add-page,
+QScrollBar::sub-page {
+    background: transparent;
+}
+
+QStatusBar::item {
+    border: none;
+    color: #c1d5ff;
 }

@@ -44,20 +44,17 @@
       <property name="text">
        <string>Midnight Aurora Interface Sampler</string>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignmentFlag::AlignHCenter|Qt::AlignmentFlag::AlignVCenter</set>
-      </property>
      </widget>
     </item>
     <item>
-      <widget class="QLabel" name="heroSubtitleLabel">
-       <property name="text">
-        <string>Interact with the controls below to preview the gradients, typography, and interaction states defined by the stylesheet.</string>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-      </widget>
+     <widget class="QLabel" name="heroSubtitleLabel">
+      <property name="text">
+       <string>Interact with the controls below to preview the gradients, typography, and interaction states defined by the stylesheet.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QGroupBox" name="buttonsGroup">
@@ -82,21 +79,21 @@
        </property>
        <item>
         <widget class="QPushButton" name="primaryButton">
-         <property name="text">
-          <string>Primary Action</string>
-         </property>
          <property name="toolTip">
           <string>Hover to see the glowing accent and press effect.</string>
+         </property>
+         <property name="text">
+          <string>Primary Action</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="secondaryButton">
-         <property name="text">
-          <string>Secondary</string>
-         </property>
          <property name="toolTip">
           <string>Buttons inherit the same gradient palette.</string>
+         </property>
+         <property name="text">
+          <string>Secondary</string>
          </property>
         </widget>
        </item>
@@ -120,10 +117,10 @@
       </property>
       <layout class="QFormLayout" name="formLayout">
        <property name="labelAlignment">
-        <set>Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+        <set>Qt::AlignLeading</set>
        </property>
        <property name="formAlignment">
-        <set>Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
        <property name="horizontalSpacing">
         <number>16</number>
@@ -173,7 +170,304 @@
          </property>
         </widget>
        </item>
-      </layout>
+     </layout>
+    </widget>
+    </item>
+    <item>
+     <widget class="QSplitter" name="controlSplitter">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QGroupBox" name="selectionGroup">
+       <property name="title">
+        <string>Selection Controls</string>
+       </property>
+       <layout class="QVBoxLayout" name="selectionLayout">
+        <property name="spacing">
+         <number>12</number>
+        </property>
+        <property name="leftMargin">
+         <number>16</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>16</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="selectionHintLabel">
+          <property name="text">
+           <string>Toggle between presentation modes and opt-in to contextual tips.</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="selectionOptionsLayout">
+          <property name="spacing">
+           <number>16</number>
+          </property>
+          <item>
+           <widget class="QGroupBox" name="radioOptionsGroup">
+            <property name="title">
+             <string>Experience Mode</string>
+            </property>
+            <layout class="QVBoxLayout" name="radioLayout">
+             <property name="spacing">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QRadioButton" name="radioStudio">
+               <property name="text">
+                <string>Studio Spotlight</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioLive">
+               <property name="text">
+                <string>Live Preview</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioAmbient">
+               <property name="text">
+                <string>Ambient Loop</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="checkOptionsGroup">
+            <property name="title">
+             <string>Overlays</string>
+            </property>
+            <layout class="QVBoxLayout" name="checkLayout">
+             <property name="spacing">
+              <number>8</number>
+             </property>
+             <item>
+              <widget class="QCheckBox" name="gridCheckBox">
+               <property name="text">
+                <string>Guides &amp; grid</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="contrastCheckBox">
+               <property name="text">
+                <string>Contrast warnings</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="motionCheckBox">
+               <property name="text">
+                <string>Reduced motion</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QGroupBox" name="dataViewsGroup">
+       <property name="title">
+        <string>Data &amp; Navigation</string>
+       </property>
+       <layout class="QVBoxLayout" name="dataLayout">
+        <property name="spacing">
+         <number>14</number>
+        </property>
+        <property name="leftMargin">
+         <number>16</number>
+        </property>
+        <property name="topMargin">
+         <number>16</number>
+        </property>
+        <property name="rightMargin">
+         <number>16</number>
+        </property>
+        <property name="bottomMargin">
+         <number>16</number>
+        </property>
+        <item>
+         <layout class="QFormLayout" name="comboFormLayout">
+          <property name="horizontalSpacing">
+           <number>16</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>10</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="themeLabel">
+            <property name="text">
+             <string>Theme preset</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="themeComboBox">
+            <item>
+             <property name="text">
+              <string>Obsidian Drift</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Lumina Frost</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Solar Verge</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="accentLabel">
+            <property name="text">
+             <string>Accent palette</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="accentComboBox">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>Emerald Pulse</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Spectrum Tide</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Nebula Ember</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTreeWidget" name="navigationTreeWidget">
+          <property name="headerHidden">
+           <bool>false</bool>
+          </property>
+          <column>
+           <property name="text">
+            <string>Section</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>State</string>
+           </property>
+          </column>
+          <item>
+           <property name="text">
+            <string>Dashboards</string>
+           </property>
+           <property name="text" >
+            <string>Online</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Insights</string>
+            </property>
+            <property name="text" >
+             <string>Synced</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Alerts</string>
+            </property>
+            <property name="text" >
+             <string>Pending</string>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>Collections</string>
+           </property>
+           <property name="text" >
+            <string>Offline</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Favorites</string>
+            </property>
+            <property name="text" >
+             <string>Pinned</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Archive</string>
+            </property>
+            <property name="text">
+             <string>Cold</string>
+            </property>
+           </item>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="variantListWidget">
+          <property name="selectionMode">
+           <enum>QAbstractItemView::MultiSelection</enum>
+          </property>
+          <item>
+           <property name="text">
+            <string>Minimal HUD</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Glyph Overlay</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Pulse Beacons</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Zen Flow</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item>
@@ -211,8 +505,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>160</width>
-            <height>200</height>
+            <width>1627</width>
+            <height>307</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="scrollAreaLayout">
@@ -238,19 +532,20 @@
              </property>
              <property name="html">
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Fira Sans'; font-size:13px; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p&gt;Aurora gradients wash across the navigation panels.&lt;/p&gt;
-&lt;p&gt;Buttons glow subtly when hovered and compress on press.&lt;/p&gt;
-&lt;p&gt;Inputs feature translucent backgrounds with vibrant selection.&lt;/p&gt;
-&lt;p&gt;Scrollbars adopt smooth pill handles to keep the look cohesive.&lt;/p&gt;
-&lt;p&gt;Tooltips keep the same palette with crisp borders.&lt;/p&gt;
-&lt;p&gt;Status messages sit on a diffused glass panel along the bottom.&lt;/p&gt;
-&lt;p&gt;Experiment with the controls to see every state in action.&lt;/p&gt;
-&lt;/body&gt;&lt;/html&gt;</string>
-          </property>
-          
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Sans'; font-size:13px;&quot;&gt;Aurora gradients wash across the navigation panels.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Sans'; font-size:13px;&quot;&gt;Buttons glow subtly when hovered and compress on press.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Sans'; font-size:13px;&quot;&gt;Inputs feature translucent backgrounds with vibrant selection.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Sans'; font-size:13px;&quot;&gt;Scrollbars adopt smooth pill handles to keep the look cohesive.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Sans'; font-size:13px;&quot;&gt;Tooltips keep the same palette with crisp borders.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Sans'; font-size:13px;&quot;&gt;Status messages sit on a diffused glass panel along the bottom.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Fira Sans'; font-size:13px;&quot;&gt;Experiment with the controls to see every state in action.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
             </widget>
            </item>
           </layout>
@@ -268,21 +563,39 @@ p, li { white-space: pre-wrap; }
      <x>0</x>
      <y>0</y>
      <width>1715</width>
-     <height>30</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="action_Open"/>
+    <addaction name="action_Save"/>
     <addaction name="action_Quit"/>
    </widget>
+   <widget class="QMenu" name="menu_Edit">
+    <property name="title">
+     <string>&amp;Edit</string>
+    </property>
+   </widget>
    <addaction name="menu_File"/>
+   <addaction name="menu_Edit"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Quit">
    <property name="text">
     <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="action_Open">
+   <property name="text">
+    <string>&amp;Open...</string>
+   </property>
+  </action>
+  <action name="action_Save">
+   <property name="text">
+    <string>&amp;Save</string>
    </property>
   </action>
  </widget>
