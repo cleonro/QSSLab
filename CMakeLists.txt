@@ -43,37 +43,80 @@ target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
 
+# Set RPATH for the executable to find libraries in the bundle
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    INSTALL_RPATH "\$ORIGIN/lib;\$ORIGIN/../lib"
+    BUILD_WITH_INSTALL_RPATH OFF
+)
+
 install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     BUNDLE DESTINATION .
 )
 
+# Install qt.conf to tell Qt where to find plugins
+install(FILES "${CMAKE_SOURCE_DIR}/qt.conf"
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+# Install only necessary Qt plugins (not all of them)
 set(_qt_plugin_destination "${CMAKE_INSTALL_BINDIR}/plugins")
-if(EXISTS "${QT6_PLUGIN_DIR}")
-    install(DIRECTORY "${QT6_PLUGIN_DIR}/"
+
+# Install platform plugins (required for Qt apps to run)
+if(EXISTS "${QT6_PLUGIN_DIR}/platforms")
+    install(DIRECTORY "${QT6_PLUGIN_DIR}/platforms"
         DESTINATION ${_qt_plugin_destination}
+        FILES_MATCHING PATTERN "*.so" PATTERN "*.dll" PATTERN "*.dylib"
     )
 endif()
 
-get_target_property(_bundle_output_name ${PROJECT_NAME} OUTPUT_NAME)
-if(NOT _bundle_output_name)
-    set(_bundle_output_name ${PROJECT_NAME})
-endif()
-set(_bundle_output_name "${_bundle_output_name}${CMAKE_EXECUTABLE_SUFFIX}")
+# Install other commonly needed plugins
+foreach(_plugin_dir IN ITEMS imageformats iconengines platformthemes)
+    if(EXISTS "${QT6_PLUGIN_DIR}/${_plugin_dir}")
+        install(DIRECTORY "${QT6_PLUGIN_DIR}/${_plugin_dir}"
+            DESTINATION ${_qt_plugin_destination}
+            FILES_MATCHING PATTERN "*.so" PATTERN "*.dll" PATTERN "*.dylib"
+        )
+    endif()
+endforeach()
 
-install(CODE
-"include(BundleUtilities)
+# Create a script for fixup_bundle
+set(FIXUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/fixup_bundle.cmake")
+file(WRITE "${FIXUP_SCRIPT}" "
+include(BundleUtilities)
+
 set(BU_CHMOD_BUNDLE_ITEMS ON)
-set(_bundle \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${_bundle_output_name}\")
-if(EXISTS \"\${_bundle}\")
-  set(_qt_runtime_dirs \"${QT6_RUNTIME_DIRS}\")
-  file(GLOB_RECURSE _qt_plugins
-       \"\${CMAKE_INSTALL_PREFIX}/${_qt_plugin_destination}/*${CMAKE_SHARED_LIBRARY_SUFFIX}\")
-  fixup_bundle(\"\${_bundle}\" \"\${_qt_plugins}\" \"\${_qt_runtime_dirs}\")
-else()
-  message(WARNING \"Bundle '\${_bundle}' does not exist. fixup_bundle skipped.\")
+
+# Define the executable path
+set(APP_EXECUTABLE \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${PROJECT_NAME}\")
+
+message(STATUS \"Fixing up bundle: \${APP_EXECUTABLE}\")
+
+if(NOT EXISTS \"\${APP_EXECUTABLE}\")
+    message(FATAL_ERROR \"Executable not found: \${APP_EXECUTABLE}\")
 endif()
+
+# Collect all installed plugins
+file(GLOB_RECURSE PLUGIN_FILES 
+    \"\${CMAKE_INSTALL_PREFIX}/${_qt_plugin_destination}/*.so\"
+    \"\${CMAKE_INSTALL_PREFIX}/${_qt_plugin_destination}/*.dll\"
+)
+
+message(STATUS \"Found \${CMAKE_INSTALL_PREFIX}/${_qt_plugin_destination} plugins: \${PLUGIN_FILES}\")
+
+# Qt runtime directories for dependency resolution
+set(QT_RUNTIME_DIRS \"${QT6_RUNTIME_DIRS}\")
+
+message(STATUS \"Qt runtime directories: \${QT_RUNTIME_DIRS}\")
+
+# Fix up the bundle
+fixup_bundle(\"\${APP_EXECUTABLE}\" \"\${PLUGIN_FILES}\" \"\${QT_RUNTIME_DIRS}\")
+
+message(STATUS \"Bundle fixup completed successfully\")
 ")
+
+# Install the fixup script to run at install time
+install(SCRIPT "${FIXUP_SCRIPT}")
 
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VENDOR "QtMainWindowApp")
@@ -82,4 +125,6 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Portable bundle of ${PROJECT_NAME}")
 set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_NAME}")
 set(CPACK_GENERATOR "TGZ;ZIP")
 set(CPACK_VERBATIM_VARIABLES ON)
+set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_BINARY_DIR}/packages")
 include(CPack)
