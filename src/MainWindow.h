@@ -1,7 +1,9 @@
 #pragma once
 
-#include <QMainWindow>
 #include <memory>
+
+#include <QMainWindow>
+#include <Qt3DExtras/Qt3DWindow>
 
 #include "ui_MainWindow.h"
 
@@ -23,4 +25,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
+    std::unique_ptr<Qt3DExtras::Qt3DWindow> qt3dWindow;
+
+    void setupQt3DViewport();
 };

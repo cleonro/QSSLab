@@ -471,6 +471,56 @@
      </widget>
     </item>
     <item>
+     <widget class="QGroupBox" name="qt3dPreviewGroup">
+      <property name="title">
+       <string>3D Preview</string>
+      </property>
+      <layout class="QVBoxLayout" name="qt3dPreviewLayout">
+       <property name="spacing">
+        <number>12</number>
+       </property>
+       <property name="leftMargin">
+        <number>16</number>
+       </property>
+       <property name="topMargin">
+        <number>16</number>
+       </property>
+       <property name="rightMargin">
+        <number>16</number>
+       </property>
+       <property name="bottomMargin">
+        <number>16</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="qt3dDescriptionLabel">
+         <property name="text">
+          <string>The live Qt 3D viewport below continuously animates a glowing torus to complement the interface sampler.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="qt3dPlaceholderWidget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>320</width>
+           <height>220</height>
+          </size>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QGroupBox" name="scrollShowcaseGroup">
       <property name="title">
        <string>Scrollable Content</string>

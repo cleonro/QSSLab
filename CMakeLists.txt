@@ -12,7 +12,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Widgets  3DExtras 3DInput 3DRender REQUIRED)
 
 get_filename_component(_qt6_cmake_dir "${Qt6_DIR}" DIRECTORY)
 get_filename_component(_qt6_lib_dir "${_qt6_cmake_dir}" DIRECTORY)
@@ -41,7 +41,13 @@ add_executable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Widgets
+    Qt6::3DCore
+    Qt6::3DExtras
+    Qt6::3DInput
+    Qt6::3DRender
+)
 
 # Set RPATH for the executable to find libraries in the bundle
 set_target_properties(${PROJECT_NAME} PROPERTIES
