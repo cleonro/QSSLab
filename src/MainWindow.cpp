@@ -2,6 +2,9 @@
 
 #include <QColor>
 #include <QFile>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QMessageBox>
 #include <QQuaternion>
 #include <QSizePolicy>
 #include <QTimer>
@@ -39,6 +42,31 @@ void MainWindow::setupUi() {
 
 void MainWindow::on_action_Quit_triggered() {
     close();
+}
+
+void MainWindow::on_action_Open_triggered() {
+    const QString filter = tr("Stylesheets (*.css *.qss);;All Files (*)");
+    const QString filePath = QFileDialog::getOpenFileName(this, tr("Open Stylesheet"), QString(), filter);
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    if (!cssEditor) {
+        cssEditor = std::make_unique<CSSEditor>(this);
+    }
+
+    if (!cssEditor->loadFromFile(filePath)) {
+        QMessageBox::warning(this,
+                             tr("Open Stylesheet"),
+                             tr("Unable to open %1").arg(QFileInfo(filePath).fileName()));
+        return;
+    }
+
+    setStyleSheet(cssEditor->stylesheetText());
+
+    cssEditor->show();
+    cssEditor->raise();
+    cssEditor->activateWindow();
 }
 
 void MainWindow::setupQt3DViewport() {
@@ -84,7 +112,7 @@ void MainWindow::setupQt3DViewport() {
 
     auto *camera = view->camera();
     camera->lens()->setPerspectiveProjection(45.f, 16.f / 9.f, 0.1f, 1000.f);
-    camera->setPosition(QVector3D(0.f, 0.f, 12.f));
+    camera->setPosition(QVector3D(0.f, 0.f, 18.f));
     camera->setViewCenter(QVector3D(0.f, 0.f, 0.f));
     camera->setUpVector(QVector3D(0.f, 1.f, 0.f));
 

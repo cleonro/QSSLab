@@ -35,6 +35,8 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
     src/MainWindow.h
     src/MainWindow.cpp
+    src/CSSEditor.h
+    src/CSSEditor.cpp
     src/MainWindow.ui
     resources/resources.qrc
 )
