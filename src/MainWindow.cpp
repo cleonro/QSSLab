@@ -1,13 +1,20 @@
 #include "MainWindow.h"
 
+#include "CSSEditor.h"
+
 #include <QColor>
+#include <QDir>
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QFileSystemModel>
 #include <QMessageBox>
 #include <QQuaternion>
 #include <QSizePolicy>
+#include <QStringConverter>
+#include <QTextStream>
 #include <QTimer>
+#include <QVector>
 #include <QVector3D>
 #include <QVBoxLayout>
 #include <cmath>
@@ -36,6 +43,7 @@ void MainWindow::setupUi() {
         // Apply the bundled fancy stylesheet to the main window.
         setStyleSheet(QString::fromUtf8(styleFile.readAll()));
     }
+    baseStyleSheet = styleSheet();
 
     setupQt3DViewport();
 }
@@ -53,6 +61,7 @@ void MainWindow::on_action_Open_triggered() {
 
     if (!cssEditor) {
         cssEditor = std::make_unique<CSSEditor>(this);
+        cssEditor->setBaseStyleSheet(baseStyleSheet);
     }
 
     if (!cssEditor->loadFromFile(filePath)) {
@@ -62,11 +71,67 @@ void MainWindow::on_action_Open_triggered() {
         return;
     }
 
-    setStyleSheet(cssEditor->stylesheetText());
+    applyStylesheetFromEditor();
+    updateFileSystemWatch(filePath);
 
     cssEditor->show();
     cssEditor->raise();
     cssEditor->activateWindow();
+}
+
+void MainWindow::on_action_Save_triggered() {
+    if (!cssEditor) {
+        QMessageBox::information(this, tr("Save Stylesheet"), tr("Open a stylesheet before saving."));
+        return;
+    }
+
+    if (cssEditor->currentFilePath().isEmpty()) {
+        on_action_Save_As_triggered();
+        return;
+    }
+
+    if (!cssEditor->save()) {
+        QMessageBox::warning(this,
+                             tr("Save Stylesheet"),
+                             tr("Unable to save %1").arg(QFileInfo(cssEditor->currentFilePath()).fileName()));
+        return;
+    }
+
+    applyStylesheetFromEditor();
+    updateFileSystemWatch(cssEditor->currentFilePath());
+}
+
+void MainWindow::on_action_Save_As_triggered() {
+    if (!cssEditor) {
+        QMessageBox::information(this, tr("Save Stylesheet As"), tr("Open a stylesheet before saving."));
+        return;
+    }
+
+    const QString filter = tr("Stylesheets (*.css *.qss);;All Files (*)");
+    const QString startDir = cssEditor->currentFilePath();
+    const QString filePath =
+        QFileDialog::getSaveFileName(this, tr("Save Stylesheet As"), startDir, filter);
+
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    if (!cssEditor->saveToFile(filePath)) {
+        QMessageBox::warning(this,
+                             tr("Save Stylesheet As"),
+                             tr("Unable to save %1").arg(QFileInfo(filePath).fileName()));
+        return;
+    }
+
+    applyStylesheetFromEditor();
+    updateFileSystemWatch(cssEditor->currentFilePath());
+}
+
+void MainWindow::applyStylesheetFromEditor() {
+    if (!cssEditor) {
+        return;
+    }
+    applyStylesheetText(cssEditor->stylesheetText());
 }
 
 void MainWindow::setupQt3DViewport() {
@@ -144,4 +209,115 @@ void MainWindow::setupQt3DViewport() {
     });
 
     rotationTimer->start();
+}
+
+void MainWindow::applyStylesheetText(const QString &css) {
+    setStyleSheet(css);
+    if (cssEditor) {
+        cssEditor->restoreBaseStyleSheet();
+    }
+}
+
+bool MainWindow::applyStylesheetFromDisk(const QString &path) {
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    QTextStream in(&file);
+    in.setEncoding(QStringConverter::Utf8);
+    applyStylesheetText(in.readAll());
+    return true;
+}
+
+void MainWindow::setupFileSystemWatcher() {
+    if (fileSystemModel) {
+        return;
+    }
+
+    fileSystemModel = std::make_unique<QFileSystemModel>();
+    fileSystemModel->setFilter(QDir::NoDotAndDotDot | QDir::AllDirs | QDir::Files);
+    fileSystemModel->setReadOnly(true);
+
+    QObject::connect(fileSystemModel.get(),
+                     &QFileSystemModel::dataChanged,
+                     this,
+                     [this](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles) {
+                         Q_UNUSED(roles);
+                         handleFileSystemDataChanged(topLeft, bottomRight);
+                     });
+
+    QObject::connect(fileSystemModel.get(),
+                     &QFileSystemModel::directoryLoaded,
+                     this,
+                     [this](const QString &) {
+                         assignWatchedFileIndex();
+                     });
+}
+
+void MainWindow::updateFileSystemWatch(const QString &filePath) {
+    if (filePath.isEmpty()) {
+        watchedFileIndex = QPersistentModelIndex();
+        pendingWatchedFilePath.clear();
+        return;
+    }
+
+    setupFileSystemWatcher();
+
+    const QFileInfo info(filePath);
+    pendingWatchedFilePath = info.absoluteFilePath();
+    fileSystemModel->setRootPath(info.absolutePath());
+    assignWatchedFileIndex();
+}
+
+void MainWindow::assignWatchedFileIndex() {
+    if (pendingWatchedFilePath.isEmpty() || !fileSystemModel) {
+        return;
+    }
+
+    const QModelIndex index = fileSystemModel->index(pendingWatchedFilePath);
+    if (index.isValid()) {
+        watchedFileIndex = QPersistentModelIndex(index);
+        pendingWatchedFilePath.clear();
+    }
+}
+
+void MainWindow::handleFileSystemDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight) {
+    if (!watchedFileIndex.isValid()) {
+        return;
+    }
+
+    if (topLeft.model() != watchedFileIndex.model()) {
+        return;
+    }
+
+    if (watchedFileIndex.parent() != topLeft.parent()) {
+        return;
+    }
+
+    const int row = watchedFileIndex.row();
+    if (row < topLeft.row() || row > bottomRight.row()) {
+        return;
+    }
+
+    reloadWatchedStylesheet();
+}
+
+void MainWindow::reloadWatchedStylesheet() {
+    if (!cssEditor) {
+        return;
+    }
+
+    const QString path = cssEditor->currentFilePath();
+    if (path.isEmpty()) {
+        return;
+    }
+
+    if (!cssEditor->isModified()) {
+        if (cssEditor->loadFromFile(path)) {
+            applyStylesheetFromEditor();
+        }
+    } else {
+        applyStylesheetFromDisk(path);
+    }
 }

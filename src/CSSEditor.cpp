@@ -5,8 +5,10 @@
 #include <QFileInfo>
 #include <QFont>
 #include <QFontDatabase>
+#include <QSaveFile>
 #include <QTextStream>
 #include <QTextOption>
+#include <QStringConverter>
 #include <QVBoxLayout>
 
 CSSSyntaxHighlighter::CSSSyntaxHighlighter(QTextDocument *parent)
@@ -91,7 +93,6 @@ bool CSSEditor::loadFromFile(const QString &path) {
 
     QTextStream in(&file);
     in.setEncoding(QStringConverter::Utf8);
-    // in.setCodec("UTF-8");
     editor->setPlainText(in.readAll());
 
     filePath = path;
@@ -106,4 +107,49 @@ QString CSSEditor::stylesheetText() const {
         return {};
     }
     return editor->toPlainText();
+}
+
+bool CSSEditor::isModified() const {
+    return editor && editor->document()->isModified();
+}
+
+bool CSSEditor::save() {
+    if (filePath.isEmpty()) {
+        return false;
+    }
+    return saveToFile(filePath);
+}
+
+bool CSSEditor::saveToFile(const QString &path) {
+    if (!editor) {
+        return false;
+    }
+
+    QSaveFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        return false;
+    }
+
+    QTextStream out(&file);
+    out.setEncoding(QStringConverter::Utf8);
+    out << editor->toPlainText();
+
+    if (!file.commit()) {
+        return false;
+    }
+
+    filePath = path;
+    const QFileInfo info(filePath);
+    setWindowTitle(tr("CSS Editor - %1").arg(info.fileName()));
+    editor->document()->setModified(false);
+    return true;
+}
+
+void CSSEditor::setBaseStyleSheet(const QString &style) {
+    baseStyleSheet = style;
+    restoreBaseStyleSheet();
+}
+
+void CSSEditor::restoreBaseStyleSheet() {
+    setStyleSheet(baseStyleSheet);
 }
