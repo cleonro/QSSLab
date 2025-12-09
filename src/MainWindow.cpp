@@ -38,6 +38,11 @@ void MainWindow::setupUi() {
     ui->setupUi(this);
     resize(1024, 768);
 
+    if (menuBar()) {
+        // Use an in-window menu bar so QSS (including translucency) is applied consistently.
+        menuBar()->setNativeMenuBar(false);
+    }
+
     QFile styleFile(":/styles/fancy.qss");
     if (styleFile.open(QFile::ReadOnly | QFile::Text)) {
         // Apply the bundled fancy stylesheet to the main window.

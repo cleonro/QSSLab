@@ -32,8 +32,8 @@ QMenuBar::item:selected {
 }
 
 QMenu {
-    background-color: #192338;
-    border: 1px solid #253044;
+    background-color: rgba(25, 35, 56, 0.9);
+    border: 1px solid rgba(37, 48, 68, 0.7);
     padding: 8px 6px;
     border-radius: 8px;
 }
@@ -45,7 +45,7 @@ QMenu::item {
 }
 
 QMenu::item:selected {
-    background-color: #2563eb;
+    background-color: rgba(37, 99, 235, 0.8);
     color: #f6fbff;
 }
 
@@ -113,7 +113,7 @@ QScrollBar::handle:vertical {
 }
 
 QScrollBar::handle:vertical:hover {
-    background: rgba(249, 158, 75, 0.6);
+    background: rgba(56, 189, 248, 0.6);
 }
 
 QScrollBar::add-line:vertical,
@@ -124,7 +124,7 @@ QScrollBar::sub-line:vertical {
 QToolTip {
     background-color: #212840;
     color: #fffaf2;
-    border: 1px solid #f99e4b;
+    border: 1px solid #22d3ee;
     border-radius: 6px;
     padding: 6px 10px;
 }
@@ -221,15 +221,15 @@ QComboBox {
 QComboBox::drop-down {
     width: 28px;
     border-left: 1px solid rgba(186, 200, 216, 0.25);
-    background: rgba(248, 180, 108, 0.18);
+    background: rgba(56, 189, 248, 0.18);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
 QComboBox QAbstractItemView {
     background: #141b2b;
-    border: 1px solid #ef8f47;
-    selection-background-color: rgba(249, 158, 75, 0.35);
+    border: 1px solid #0ea5e9;
+    selection-background-color: rgba(56, 189, 248, 0.35);
     color: #f4f0ff;
 }
 
@@ -247,12 +247,12 @@ QTreeWidget::item, QListWidget::item {
 }
 
 QTreeWidget::item:selected, QListWidget::item:selected {
-    background: rgba(249, 158, 75, 0.25);
+    background: rgba(56, 189, 248, 0.25);
     color: #fff9f3;
 }
 
 QTreeWidget::item:hover, QListWidget::item:hover {
-    background: rgba(249, 158, 75, 0.15);
+    background: rgba(56, 189, 248, 0.15);
 }
 
 QScrollArea {
@@ -272,7 +272,7 @@ QSplitter::handle {
 }
 
 QSplitter::handle:hover {
-    background: rgba(249, 158, 75, 0.35);
+    background: rgba(56, 189, 248, 0.35);
 }
 
 QScrollBar:horizontal {
@@ -288,7 +288,7 @@ QScrollBar::handle:horizontal {
 }
 
 QScrollBar::handle:horizontal:hover {
-    background: rgba(249, 158, 75, 0.6);
+    background: rgba(56, 189, 248, 0.6);
 }
 
 QScrollBar::add-page,

@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_QtMainWindowApp_FILE /home/catalin/workspace_codex/test/build/QtMainWindowApp)
+set(__QT_DEPLOY_TARGET_QtMainWindowApp_TYPE EXECUTABLE)

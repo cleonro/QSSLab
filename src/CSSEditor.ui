@@ -26,14 +26,36 @@
    <property name="rightMargin">
     <number>0</number>
    </property>
-   <property name="bottomMargin">
+  <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
-    <widget class="QPlainTextEdit" name="cssPlainTextEdit">
-     <property name="placeholderText">
-      <string>Open a stylesheet to begin editing...</string>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
+     <property name="handleWidth">
+      <number>6</number>
+     </property>
+     <widget class="QPlainTextEdit" name="cssPlainTextEdit">
+      <property name="placeholderText">
+       <string>Open a stylesheet to begin editing...</string>
+      </property>
+     </widget>
+     <widget class="QGraphicsView" name="styleGraphView">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>220</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="renderHint">
+       <set>QPainter::Antialiasing</set>
+      </property>
+     </widget>
     </widget>
    </item>
   </layout>

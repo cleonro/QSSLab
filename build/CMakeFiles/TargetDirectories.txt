@@ -1,0 +1,11 @@
+/home/catalin/workspace_codex/test/build/CMakeFiles/QtMainWindowApp.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/package.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/package_source.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/edit_cache.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/rebuild_cache.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/list_install_components.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/install.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/install/local.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/install/strip.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/QtMainWindowApp_autogen_timestamp_deps.dir
+/home/catalin/workspace_codex/test/build/CMakeFiles/QtMainWindowApp_autogen.dir

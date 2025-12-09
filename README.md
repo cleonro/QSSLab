@@ -35,3 +35,4 @@ Launch the app from the chosen build directory, e.g. `../build_Debug/QtMainWindo
 - `File -> Save` / `Save As…` to persist changes from the editor pane.
 - External edits to the opened file are detected; the app reloads and reapplies the stylesheet unless there are unsaved in-app edits, in which case it keeps the in-memory version.
 - The editor highlights selectors, properties, values, and multi-line comments for quick scanning.
+- A color/gradient graph below the editor shows which selectors share the same fill; it rebuilds on load and after saving.
