@@ -5,11 +5,13 @@
 #include <QFileInfo>
 #include <QFont>
 #include <QFontDatabase>
+#include <QPlainTextEdit>
 #include <QSaveFile>
 #include <QTextStream>
 #include <QTextOption>
 #include <QStringConverter>
-#include <QVBoxLayout>
+
+#include "ui_CSSEditor.h"
 
 CSSSyntaxHighlighter::CSSSyntaxHighlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent) {
@@ -63,26 +65,25 @@ void CSSSyntaxHighlighter::highlightBlock(const QString &text) {
 }
 
 CSSEditor::CSSEditor(QWidget *parent)
-    : QWidget(parent) {
-    setupEditor();
+    : QWidget(parent),
+      ui(std::make_unique<Ui::CSSEditor>()) {
+    ui->setupUi(this);
+    editor = ui->cssPlainTextEdit;
+
+    if (editor) {
+        editor->setWordWrapMode(QTextOption::NoWrap);
+        editor->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+    }
+
     setWindowTitle(tr("CSS Editor"));
     setAttribute(Qt::WA_DeleteOnClose, false);
     setWindowFlag(Qt::Window);
     setWindowModality(Qt::NonModal);
     resize(640, 720);
-}
 
-void CSSEditor::setupEditor() {
-    auto *layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-
-    editor = new QPlainTextEdit(this);
-    editor->setWordWrapMode(QTextOption::NoWrap);
-    editor->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
-    editor->setPlaceholderText(tr("Open a stylesheet to begin editing..."));
-    layout->addWidget(editor);
-
-    highlighter = std::make_unique<CSSSyntaxHighlighter>(editor->document());
+    if (editor) {
+        highlighter = std::make_unique<CSSSyntaxHighlighter>(editor->document());
+    }
 }
 
 bool CSSEditor::loadFromFile(const QString &path) {

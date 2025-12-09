@@ -2,6 +2,8 @@
 
 #include <memory>
 
+#include "ui_CSSEditor.h"
+
 #include <QPlainTextEdit>
 #include <QRegularExpression>
 #include <QSyntaxHighlighter>
@@ -9,6 +11,10 @@
 #include <QString>
 #include <QVector>
 #include <QWidget>
+
+namespace Ui {
+class CSSEditor;
+}
 
 class CSSSyntaxHighlighter : public QSyntaxHighlighter {
     Q_OBJECT
@@ -45,8 +51,7 @@ public:
     void restoreBaseStyleSheet();
 
 private:
-    void setupEditor();
-
+    std::unique_ptr<Ui::CSSEditor> ui;
     QPlainTextEdit *editor = nullptr;
     std::unique_ptr<CSSSyntaxHighlighter> highlighter;
     QString filePath;
