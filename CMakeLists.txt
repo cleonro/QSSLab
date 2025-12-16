@@ -12,7 +12,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 COMPONENTS Widgets  3DExtras 3DInput 3DRender REQUIRED)
+find_package(Qt6 COMPONENTS Widgets 3DCore 3DExtras 3DInput 3DRender REQUIRED)
 
 get_filename_component(_qt6_cmake_dir "${Qt6_DIR}" DIRECTORY)
 get_filename_component(_qt6_lib_dir "${_qt6_cmake_dir}" DIRECTORY)
