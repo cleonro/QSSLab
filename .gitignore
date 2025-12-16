@@ -3,4 +3,5 @@
 .cache
 .qtcreator
 *.user
+build
 
