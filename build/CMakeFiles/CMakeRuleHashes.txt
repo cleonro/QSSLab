@@ -1,4 +1,0 @@
-# Hashes of file build rules.
-053ee60de6e8911c0882737464fa984c CMakeFiles/QtMainWindowApp_autogen
-0dfef278e9cd0baa13a2ae5e3b70e329 QtMainWindowApp_autogen/3YJK5W5UP7/qrc_resources.cpp
-3909125e3efeca195387345f2655c27a QtMainWindowApp_autogen/timestamp
